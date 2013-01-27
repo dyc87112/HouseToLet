@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+	<persistence-unit name="hiberante" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<properties>
+			<property key="hibernate.dialect">${hibernate.dialect}</property>
+			<property key="hibernate.show_sql">${hibernate.show_sql}</property>
+			<property key="hibernate.format_sql">${hibernate.format_sql}</property>
+			<property key="hibernate.query.substitutions">${hibernate.query.substitutions}</property>
+			<property key="hibernate.default_batch_fetch_size">${hibernate.default_batch_fetch_size}</property>
+			<property key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</property>
+			<property key="hibernate.generate_statistics">${hibernate.generate_statistics}</property>
+			<property key="hibernate.bytecode.use_reflection_optimizer">${hibernate.bytecode.use_reflection_optimizer}</property>
+			<property key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</property>
+		</properties>
+	</persistence-unit>
+</persistence>
