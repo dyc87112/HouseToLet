@@ -56,7 +56,7 @@ public class ConfigController extends BaseController {
 		user.setElectPrice(u.getElectPrice());
 		user.setWaterPrice(u.getWaterPrice());
 		user.setNetPrice(u.getNetPrice());
-		userRepository.save(user);
+		session.setAttribute("user", userRepository.save(user));
 		return LAYOUT_PAGE;
 	}
 	
