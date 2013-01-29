@@ -7,9 +7,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- bootstrap 引用 -->
 <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 <script src="<%=request.getContextPath()%>/bootstrap/js/bootstrap.js"></script>
+<!-- JQUERY UI 引用 -->
+<link href="<%=request.getContextPath()%>/jquery-ui/css/smoothness/jquery-ui-1.10.0.custom.css" rel="stylesheet">
+<script src="<%=request.getContextPath()%>/jquery-ui/js/jquery-1.9.0.js"></script>
+<script src="<%=request.getContextPath()%>/jquery-ui/js/jquery-ui-1.10.0.custom.min.js"></script>
+<script src="<%=request.getContextPath()%>/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="<%=request.getContextPath()%>/jquery-validation/localization/messages_zh.js"></script>
+<script src="<%=request.getContextPath()%>/js/datepicker.js"></script>
 <style type="text/css">
 body {
 	font-family: Microsoft YaHei, Droid Sans Mono;

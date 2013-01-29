@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.nextplus.common.domain.SuperEntity;
 
 /**
@@ -24,8 +26,11 @@ import com.nextplus.common.domain.SuperEntity;
 @Table(name = "rental")
 public class Rental extends SuperEntity {
 
+	@NotBlank
 	private String customerName;		// 客户姓名
+	@NotBlank
 	private String customerId;			// 客户证件号码
+	@NotBlank
 	private String customerTel;			// 客户电话
 	
 	private Boolean hasNet;				// 是否使用网络

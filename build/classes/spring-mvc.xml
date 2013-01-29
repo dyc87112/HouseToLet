@@ -21,6 +21,10 @@
 	<mvc:resources mapping="/bootstrap/img/**" location="/WEB-INF/bootstrap/img/" />   
 	<mvc:resources mapping="/bootstrap/css/**" location="/WEB-INF/bootstrap/css/" />   
 	<mvc:resources mapping="/bootstrap/js/**" location="/WEB-INF/bootstrap/js/" /> 
+	<mvc:resources mapping="/js/**" location="/WEB-INF/js/" /> 
+	<mvc:resources mapping="/jquery/**" location="/WEB-INF/jquery/" /> 
+	<mvc:resources mapping="/jquery-ui/**" location="/WEB-INF/jquery-ui/" /> 
+	<mvc:resources mapping="/jquery-validation/**" location="/WEB-INF/jquery-validation/" /> 
 	
 	<!-- 定义JSP文件的位置 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
