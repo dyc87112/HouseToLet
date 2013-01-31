@@ -32,7 +32,8 @@
 			<div class="control-group">
 				<label class="control-label">本月电表读数：</label>
 				<div class="controls">
-					<form:input path="endElect" type="text" placeholder="请输入电表读数" />（单位：千瓦时）
+					<form:input path="endElect" type="text" placeholder="请输入电表读数"
+								class="{validate:{ required:true,number:true,min:${payment.startElect } }}" />（单位：千瓦时）
 				</div>
 			</div>
 			<div class="control-group" style="display: none">
@@ -50,7 +51,8 @@
 			<div class="control-group">
 				<label class="control-label">本月水表读数：</label>
 				<div class="controls">
-					<form:input path="endWater" type="text" placeholder="请输入水表读数" />（单位：吨）
+					<form:input path="endWater" type="text" placeholder="请输入水表读数" 
+								class="{validate:{ required:true,number:true,min:${payment.startWater } }}" />（单位：吨）
 				</div>
 			</div>
 			<div class="control-group" style="display: none">
@@ -62,7 +64,8 @@
 			<div class="control-group">
 				<label class="control-label">调整金额：</label>
 				<div class="controls">
-					<form:input path="adjustSum" type="text" placeholder="请输入调整金额" />（单位：元）
+					<form:input path="adjustSum" type="text" placeholder="请输入调整金额"
+								class="{validate:{ required:true,number:true }}" />（单位：元）
 				</div>
 			</div>
 			<div class="control-group">
@@ -80,3 +83,10 @@
 		</fieldset>
 	</form:form>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#startDate").datepicker();
+		
+		$("#payment").validate({})
+	});
+</script>

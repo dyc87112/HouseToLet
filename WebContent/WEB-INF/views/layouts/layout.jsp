@@ -16,8 +16,12 @@
 <script src="<%=request.getContextPath()%>/jquery-ui/js/jquery-1.9.0.js"></script>
 <script src="<%=request.getContextPath()%>/jquery-ui/js/jquery-ui-1.10.0.custom.min.js"></script>
 <script src="<%=request.getContextPath()%>/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="<%=request.getContextPath()%>/jquery-validation/lib/jquery.metadata.js"></script>
 <script src="<%=request.getContextPath()%>/jquery-validation/localization/messages_zh.js"></script>
 <script src="<%=request.getContextPath()%>/js/datepicker.js"></script>
+<script src="<%=request.getContextPath()%>/js/validation.js"></script>
+<link href="<%=request.getContextPath()%>/js/validation.css" rel="stylesheet">
+
 <style type="text/css">
 body {
 	font-family: Microsoft YaHei, Droid Sans Mono;
@@ -29,6 +33,21 @@ body {
 	padding: 9px 0;
 }
 </style>
+<script type="text/javascript">
+$(document).ready(function() {
+	// 设置菜单激活状态
+	//var pageContent = document.getElementById("pageContent").value;
+	//document.getElementById(pageContent).setAttribute("class", "active");
+	
+	// 屏蔽回车
+	$(this).keydown( function(e) {
+        var key = window.event?e.keyCode:e.which;
+        if(key.toString() == "13"){
+        	return false;
+        }
+	});
+});
+</script>
 <title>House To Let</title>
 </head>
 <body>
@@ -97,8 +116,4 @@ body {
 		</footer>
 	</div>
 </body>
-<script type="text/javascript">
-	var pageContent = document.getElementById("pageContent").value;
-	document.getElementById(pageContent).setAttribute("class", "active");
-</script>
 </html>

@@ -3,13 +3,13 @@
  * Locale: ZH (Chinese, 中文 (Zhōngwén), 汉语, 漢語)
  */
 jQuery.extend(jQuery.validator.messages, {
-        required: "字段不能为空",
+        required: "必须输入",
 		remote: "请修正该字段",
 		email: "请输入正确格式的电子邮件",
 		url: "请输入合法的网址",
 		date: "请输入合法的日期",
 		dateISO: "请输入合法的日期 (ISO).",
-		number: "请输入合法的数字",
+		number: "必须是数字",
 		digits: "只能输入整数",
 		creditcard: "请输入合法的信用卡号",
 		equalTo: "请再次输入相同的值",

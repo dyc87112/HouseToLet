@@ -18,28 +18,32 @@
 			<div class="control-group">
 				<label class="control-label" for="customerName">客户姓名：</label>
 				<div class="controls">
-					<form:input path="customerName" type="text" placeholder="请输入客户姓名" />
+					<form:input path="customerName" type="text" placeholder="请输入客户姓名" 
+								class="{validate:{ required:true}}" />
 					<form:errors path="customerName" cssStyle="color:red" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="customerId">客户证件号码：</label>
 				<div class="controls">
-					<form:input path="customerId" type="text" placeholder="请输入客户证件号码" />
+					<form:input path="customerId" type="text" placeholder="请输入客户证件号码"
+								class="{validate:{ required:true}}" />
 					<form:errors path="customerId" cssStyle="color:red" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="customerTel">客户电话：</label>
 				<div class="controls">
-					<form:input path="customerTel" type="text" placeholder="请输入客户电话" />
+					<form:input path="customerTel" type="text" placeholder="请输入客户电话"
+								class="{validate:{ required:true}}" />
 					<form:errors path="customerTel" cssStyle="color:red" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="startDate">起租日期（格式：yyyy-MM-dd）：</label>
 				<div class="controls">
-					<form:input path="startDate" type="text" placeholder="请输入起租日期" />
+					<form:input path="startDate" type="text" placeholder="请选择起租日期" 
+								class="{validate:{ required:true,number:true }}"/>
 					<form:errors path="startDate" cssStyle="color:red" />
 				</div>
 			</div>
@@ -56,14 +60,16 @@
 			<div class="control-group">
 				<label class="control-label" for="basePayment">基础房租（单位：元）：</label>
 				<div class="controls">
-					<form:input path="basePayment" type="text" placeholder="请输入基础房租" />
+					<form:input path="basePayment" type="text" placeholder="请输入基础房租"
+								class="{validate:{ required:true,number:true }}" />
 					<form:errors path="basePayment" cssStyle="color:red" />
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label" for="deposit">押金（单位：元）：</label>
 				<div class="controls">
-					<form:input path="deposit" type="text" placeholder="请输入押金" />
+					<form:input path="deposit" type="text" placeholder="请输入押金"
+								class="{validate:{ required:true,number:true }}" />
 					<form:errors path="deposit" cssStyle="color:red" />
 				</div>
 			</div>
@@ -83,3 +89,12 @@
 		</fieldset>
 	</form:form>
 </div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#startDate").datepicker();
+		
+		$("#rental").validate({
+		});
+		
+	});
+</script>
