@@ -85,8 +85,6 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#startDate").datepicker();
-		
 		$("#payment").validate({})
 	});
 </script>
