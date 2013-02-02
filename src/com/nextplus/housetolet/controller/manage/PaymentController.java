@@ -152,7 +152,7 @@ public class PaymentController extends BaseController {
 		if(user == null) {
 			return NEED_LOGIN;
 		}
-		paymentRepository.delete(paymentId);
+		paymentService.deletePayment(paymentId);
 		return "redirect:/payment/list";
 	}
 	

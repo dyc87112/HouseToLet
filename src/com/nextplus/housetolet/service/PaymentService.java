@@ -9,6 +9,14 @@ import com.nextplus.housetolet.domain.User;
 public interface PaymentService {
 	
 	/**
+	 * 删除账单，并且修改租赁关系中的下一次结算日期
+	 * 
+	 * @param paymentId
+	 */
+	@Transactional(rollbackFor=Exception.class) 
+	void deletePayment(Long paymentId);
+	
+	/**
 	 * 准备首次账单的表单
 	 * 
 	 * @param user

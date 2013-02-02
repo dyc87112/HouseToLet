@@ -1,5 +1,6 @@
 package com.nextplus.housetolet.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -118,6 +119,20 @@ public class PaymentServiceImpl extends BaseService implements PaymentService {
 		payment.setRoom(room);
 		payment.computeLastPayment();
 		return paymentRepository.save(payment);
+	}
+	
+	@Override
+	public void deletePayment(Long paymentId) {
+		Payment payment = paymentRepository.findOne(paymentId);
+		Rental rental = payment.getRental();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String paymentEndDate = dateFormat.format(payment.getEndDate());
+		String rentalNextDate = dateFormat.format(rental.getNextPayDate());
+		if(paymentEndDate.equals(rentalNextDate)) {
+			rental.setNextPayDate(payment.getStartDate());
+			rentalRepository.save(rental);
+		}
+		paymentRepository.delete(payment);
 	}
 
 }

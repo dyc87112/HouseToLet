@@ -94,12 +94,20 @@
 							<form:option value="true">是</form:option>
 						</c:if>
 					</form:select>
+					<input id="netPrice" type="hidden" value="${rental.user.netPrice }" />
 					（网费：${rental.user.netPrice }元/月）
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">合计：</label>
+				<div class="controls">
+					<input id="sumPay" type="text" readonly="readonly" placeholder="点击合计按钮计算" />元
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label"></label>
 				<div class="controls">
+					<button id="getSum" class="btn btn-normal btn-warning" type="button">合计</button>
 					<button class="btn btn-normal btn-primary" type="submit">生成账单</button>
 				</div>
 			</div>
@@ -109,10 +117,27 @@
 <script type="text/javascript">
 	$(document).ready(
 		function() {
+			$("#getSum").click(function(){
+				// TODO AJAX请求提交表单，计算合计值	
+				var sumPay = 0;
+				$("#sumPay").attr("value", sumPay);
+			});
+			
 			$("#startDate").datepicker({
 					onSelect : function(dateText, inst) {
 						var date = new Date(dateText);
 						date.setDate(date.getDate() + 30);
+						// FIXME 目前以30天为一个结账周期，需要改为一个月，要研究一下日期的计算方法
+						/*
+						if(date.getDate() == '31') {
+							date.setMonth(date.getMonth() + 1);
+							if(date.getDate() == '01') {
+								date.setDate(date.getDate() - 1);
+							}													
+						} else {
+							date.setMonth(date.getMonth() + 1);
+						}
+						*/
 						$("#endDate").attr("value", date.Format("yyyy-MM-dd"));
 					}
 			});
