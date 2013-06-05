@@ -20,6 +20,14 @@
 				</div>
 			</div>
 			<div class="control-group">
+				<label class="control-label">结算日期：</label>
+				<div class="controls">
+					<form:input path="startDate" type="text" readonly="true" />
+					至
+					<form:input path="endDate" type="text" readonly="true" />
+				</div>
+			</div>
+			<div class="control-group">
 				<label class="control-label">基础租金（元）：</label>
 				<div class="controls">
 					<form:input path="basePayment" type="text" readonly="true" />
@@ -32,26 +40,11 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">结算日期：</label>
-				<div class="controls">
-					<form:input path="startDate" type="text" readonly="true" />
-					至
-					<form:input path="endDate" type="text" readonly="true" />
-				</div>
-			</div>
-			<div class="control-group">
 				<label class="control-label">起租电表读数：</label>
 				<div class="controls">
 					<form:input path="startElect" type="text" placeholder="请输入电表读数"
 						class="{validate:{ required:true,number:true }}" />
 					（单位：千瓦时）
-				</div>
-			</div>
-			<div class="control-group" style="display: none;">
-				<label class="control-label">电费单价：</label>
-				<div class="controls">
-					<form:input path="electPrice" type="text" readonly="true" />
-					（单位：元/千瓦时）
 				</div>
 			</div>
 			<div class="control-group">
@@ -62,15 +55,16 @@
 					（单位：吨）
 				</div>
 			</div>
-			<div class="control-group" style="display: none;">
-				<label class="control-label">水费单价：</label>
+			<div class="control-group">
+				<label class="control-label">结转零头：</label>
 				<div class="controls">
-					<form:input path="waterPrice" type="text" readonly="true" />
-					（单位：元/吨）
+					<form:input path="adjustPrice" type="text" placeholder="请输入结转零头" readonly="true"
+						class="{validate:{ required:true,number:true }}" />
+					（单位：元）
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">调整金额：</label>
+				<label class="control-label">其他费用：</label>
 				<div class="controls">
 					<form:input path="adjustSum" type="text" placeholder="请输入调整金额"
 						class="{validate:{ required:true,number:true }}" />
@@ -78,7 +72,7 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">调整金额说明：</label>
+				<label class="control-label">其他费用说明：</label>
 				<div class="controls">
 					<form:input path="adjustInfo" type="text" placeholder="请输入调整金额说明" />
 				</div>
@@ -94,75 +88,26 @@
 							<form:option value="true">是</form:option>
 						</c:if>
 					</form:select>
-					<input id="netPrice" type="hidden" value="${rental.user.netPrice }" />
-					（网费：${rental.user.netPrice }元/月）
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label">合计：</label>
-				<div class="controls">
-					<input id="sumPay" type="text" readonly="readonly" placeholder="点击合计按钮计算" />元
+					（网费：${payment.netPrice }元/月）
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label"></label>
 				<div class="controls">
-					<button id="getSum" class="btn btn-normal btn-warning" type="button">合计</button>
 					<button class="btn btn-normal btn-primary" type="submit">生成账单</button>
 				</div>
 			</div>
+			<form:input path="waterPrice" type="hidden" />
+			<form:input path="netPrice" type="hidden" />
+			<form:input path="electPrice" type="hidden" />
 		</fieldset>
 	</form:form>
 </div>
 <script type="text/javascript">
 	$(document).ready(
 		function() {
-			$("#getSum").click(function(){
-				// TODO AJAX请求提交表单，计算合计值	
-				var sumPay = 0;
-				$("#sumPay").attr("value", sumPay);
-			});
-			
-			$("#startDate").datepicker({
-					onSelect : function(dateText, inst) {
-						var date = new Date(dateText);
-						date.setDate(date.getDate() + 30);
-						// FIXME 目前以30天为一个结账周期，需要改为一个月，要研究一下日期的计算方法
-						/*
-						if(date.getDate() == '31') {
-							date.setMonth(date.getMonth() + 1);
-							if(date.getDate() == '01') {
-								date.setDate(date.getDate() - 1);
-							}													
-						} else {
-							date.setMonth(date.getMonth() + 1);
-						}
-						*/
-						$("#endDate").attr("value", date.Format("yyyy-MM-dd"));
-					}
-			});
+			$("#startDate").datepicker();
+			$("#endDate").datepicker();
 			$("#payment").validate({});
 		});
-</script>
-<script>
-	Date.prototype.Format = function(fmt) {
-		var o = {
-			"M+" : this.getMonth() + 1, //月份 
-			"d+" : this.getDate(), //日 
-			"h+" : this.getHours(), //小时 
-			"m+" : this.getMinutes(), //分 
-			"s+" : this.getSeconds(), //秒 
-			"q+" : Math.floor((this.getMonth() + 3) / 3), //季度 
-			"S" : this.getMilliseconds()
-		//毫秒 
-		};
-		if (/(y+)/.test(fmt))
-			fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "")
-					.substr(4 - RegExp.$1.length));
-		for ( var k in o)
-			if (new RegExp("(" + k + ")").test(fmt))
-				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k])
-						: (("00" + o[k]).substr(("" + o[k]).length)));
-		return fmt;
-	}
 </script>

@@ -14,7 +14,7 @@
 			<h4 style="text-align: center;">房租结算通知单（${payment.type }）</h4>
 			<p style="text-align: right;">
 			结算日期：<fmt:formatDate value="${payment.startDate }" pattern="yyyy年MM月dd日" />--
-					<fmt:formatDate value="${payment.endDate }" pattern="yyyy年MM月dd日" />（30天有效）
+					<fmt:formatDate value="${payment.endDate }" pattern="yyyy年MM月dd日" />
 			</p>
 			<table style="width: 100%;border: 0px;text-align: right;">
 				<tr>
@@ -41,7 +41,7 @@
 						<td>电费</td>
 						<td>${payment.startElect }</td>
 						<td>${payment.endElect }</td>
-						<td>${payment.endElect-payment.startElect }</td>
+						<td><fmt:formatNumber value="${payment.endElect-payment.startElect }" pattern="#.##"/></td>
 						<td>${payment.electPrice}</td>
 						<td>${payment.electPay }</td>
 						<td></td>
@@ -50,7 +50,7 @@
 						<td>水费</td>
 						<td>${payment.startWater }</td>
 						<td>${payment.endWater }</td>
-						<td>${payment.endWater-payment.startWater }</td>
+						<td><fmt:formatNumber value="${payment.endWater-payment.startWater }" pattern="#.##"/></td>
 						<td>${payment.waterPrice}</td>
 						<td>${payment.waterPay }</td>
 						<td></td>
@@ -88,13 +88,22 @@
 						<td></td>
 					</tr>
 					<tr>
-						<td>调整金额</td>
+						<td>其他费用</td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td>${payment.adjustSum  }</td>
 						<td>${payment.adjustInfo  }</td>
+					</tr>
+					<tr>
+						<td>结转零头</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td>${payment.adjustPrice  }</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>合计</td>

@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nextplus.housetolet.controller.BaseController;
 import com.nextplus.housetolet.domain.Payment;
@@ -168,6 +171,15 @@ public class PaymentController extends BaseController {
 		modelMap.addAttribute("paymentList", paymentList);
 		modelMap.addAttribute(PAGE_PATH, "content/payment/list");
 		return LAYOUT_PAGE;
+	}
+	
+	@RequestMapping(value = "/getSum", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, String> getPaymentSum(
+			@RequestBody Payment payment,
+			HttpSession session, ModelMap modelMap) {
+		// TODO 计算账单结算页面的预合计
+		return null;
 	}
 	
 }

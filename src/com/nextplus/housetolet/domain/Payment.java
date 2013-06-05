@@ -1,5 +1,7 @@
 package com.nextplus.housetolet.domain;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -26,14 +28,17 @@ public class Payment extends SuperEntity {
 	private Double endElect;			// 结束电表读数
 	private Double endWater;			// 结束水表读数
 	private Double deposit;				// 押金
-	private Double adjustSum;			// 调整费用 
-	private String adjustInfo;			// 调整费用说明
+	private Double adjustPrice;			// 结转零头
+	private Double adjustSum;			// 其他费用 
+	private String adjustInfo;			// 其他费用说明
 	private Date createDate;			// 账单创建日期
 	private String type;				// 类型：开房、退房、月结
 
 	// 从User中获得
 	private Double electPrice;			// 电费单价
 	private Double waterPrice;			// 水费单价
+	private Double netPrice;			// 网费单价
+	
 	// 以下属性通过Rental中获得
 	private Boolean hasNet;				// 是否使用网络
 	private Double basePayment;			// 基础房租
@@ -64,17 +69,19 @@ public class Payment extends SuperEntity {
 	 * @param user
 	 */
 	public void computePaymentAndInitDate() {
+		DecimalFormat df = new DecimalFormat("0.00");
 		// 计算水费、电费、网费 
-		setElectPay(getElectPrice() * (getEndElect() - getStartElect()));
-		setWaterPay(getWaterPrice() * (getEndWater() - getStartWater()));
-		if(getHasNet()) {
-			setNetPay(user.getNetPrice());
-		} else {
-			setNetPay(0.0);
-		}
-		// 计算水费、电费、网费、基础租金、押金、调整金额的总和
-		setSumPay(getBasePayment() + getDeposit() + getElectPay() + getWaterPay() + 
-				getNetPay() + getAdjustSum());
+		setElectPay(Double.valueOf(df.format(getElectPrice() * (getEndElect() - getStartElect()))));
+		setWaterPay(Double.valueOf(df.format(getWaterPrice() * (getEndWater() - getStartWater()))));
+		netPay = hasNet ? getNetPrice() : 0;
+		// 计算水费、电费、网费、基础租金、押金、其他费用的总和，并四舍五入计算结转零头
+		double sum = getBasePayment() + getDeposit() + getElectPay() + getWaterPay() + getNetPay() + getAdjustSum();
+		long sumRound = Math.round(sum);
+		setSumPay(Double.valueOf(sumRound));
+		BigDecimal sumB = new BigDecimal(sum);
+		BigDecimal sumR = new BigDecimal(sumRound);
+		BigDecimal decimal = sumR.subtract(sumB);
+		setAdjustPrice(Double.valueOf(df.format(decimal.doubleValue())));
 		// 设置状态为未缴纳房租
 		setHasPayed(false);
 	}
@@ -83,9 +90,17 @@ public class Payment extends SuperEntity {
 	 * 计算退房时候的押金和水电
 	 */
 	public void computeLastPayment() {
-		setElectPay(getElectPrice() * (getEndElect() - getStartElect()));
-		setWaterPay(getWaterPrice() * (getEndWater() - getStartWater()));
-		setSumPay(getElectPay() + getWaterPay() + getAdjustSum() + getDeposit());
+		DecimalFormat df = new DecimalFormat("0.00");
+		// 计算水费、电费、网费 
+		setElectPay(Double.valueOf(df.format(getElectPrice() * (getEndElect() - getStartElect()))));
+		setWaterPay(Double.valueOf(df.format(getWaterPrice() * (getEndWater() - getStartWater()))));
+		double sum = getElectPay() + getWaterPay() + getAdjustSum() + getDeposit();
+		long sumRound = Math.round(sum);
+		setSumPay(Double.valueOf(sumRound));
+		BigDecimal sumB = new BigDecimal(sum);
+		BigDecimal sumR = new BigDecimal(sumRound);
+		BigDecimal decimal = sumR.subtract(sumB);
+		setAdjustPrice(Double.valueOf(df.format(decimal.doubleValue())));
 	}
 	
 	public Date getStartDate() {
@@ -270,6 +285,22 @@ public class Payment extends SuperEntity {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Double getAdjustPrice() {
+		return adjustPrice;
+	}
+
+	public void setAdjustPrice(Double adjustPrice) {
+		this.adjustPrice = adjustPrice;
+	}
+
+	public Double getNetPrice() {
+		return netPrice;
+	}
+
+	public void setNetPrice(Double netPrice) {
+		this.netPrice = netPrice;
 	}
 	
 }

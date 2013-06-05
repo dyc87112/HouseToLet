@@ -62,16 +62,16 @@
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">调整金额：</label>
+				<label class="control-label">其他费用：</label>
 				<div class="controls">
-					<form:input path="adjustSum" type="text" placeholder="请输入调整金额"
+					<form:input path="adjustSum" type="text" placeholder="请输入其他费用"
 								class="{validate:{ required:true,number:true }}" />（单位：元）
 				</div>
 			</div>
 			<div class="control-group">
-				<label class="control-label">调整金额说明：</label>
+				<label class="control-label">其他费用说明：</label>
 				<div class="controls">
-					<form:input path="adjustInfo" type="text" placeholder="请输入调整金额说明" />
+					<form:input path="adjustInfo" type="text" placeholder="请输入其他费用说明" />
 				</div>
 			</div>
 			<div class="control-group">

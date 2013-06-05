@@ -18,35 +18,43 @@ public class PaymentServiceImpl extends BaseService implements PaymentService {
 	@Override
 	public Payment preFirstPayment(User user, Rental rental) {
 		Payment payment = new Payment();
+		// 用户单价设置
 		payment.setWaterPrice(user.getWaterPrice());
 		payment.setElectPrice(user.getElectPrice());
-		// 设置结算开始时间和结束时间，以30天为一个周期算
+		payment.setNetPrice(user.getNetPrice());
+		// 设置结算开始时间和结束时间，结束时间增加一个月，提供参考，前台页面可以修改值
 		payment.setStartDate(rental.getStartDate());
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(payment.getStartDate());
-		calendar.add(Calendar.DATE, 30);
+		calendar.add(Calendar.MONDAY, 1);
 		payment.setEndDate(calendar.getTime());
-		// 设置基础房租、押金、是否用网络、调整金额为0
+		// 设置基础房租、押金、是否用网络、 其他费用为0
 		payment.setBasePayment(rental.getBasePayment());
 		payment.setDeposit(rental.getDeposit());
 		payment.setHasNet(rental.getHasNet());
-		payment.setAdjustSum(0.0);
+		payment.setAdjustSum(0.0);				// 其他费用
+		payment.setAdjustPrice(0.0);			// 结转零头
 		return payment;
 	}
 
 	@Override
 	public Payment preMonthPayment(User user, Rental rental, Payment lastPayment) {
 		Payment payment = new Payment();
+		// 用户单价设置
 		payment.setWaterPrice(user.getWaterPrice());
 		payment.setElectPrice(user.getElectPrice());
-		payment.setBasePayment(rental.getBasePayment());
-		payment.setAdjustSum(0.0);
-		payment.setDeposit(0.0);
+		payment.setNetPrice(user.getNetPrice());
+		// 设置结算开始时间和结束时间，结束时间增加一个月，提供参考，前台页面可以修改值
 		payment.setStartDate(lastPayment.getEndDate());
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(payment.getStartDate());
-		calendar.add(Calendar.DATE, 30);
+		calendar.add(Calendar.MONTH, 1);
 		payment.setEndDate(calendar.getTime());
+		// 设置基础房租、押金、是否用网络、调整金额为0
+		payment.setBasePayment(rental.getBasePayment());
+		payment.setDeposit(0.0);
+		payment.setAdjustSum(0.0);				// 其他费用
+		// 设置上月水电和网络
 		payment.setStartElect(lastPayment.getEndElect());
 		payment.setStartWater(lastPayment.getEndWater());
 		payment.setHasNet(rental.getHasNet());
@@ -58,6 +66,7 @@ public class PaymentServiceImpl extends BaseService implements PaymentService {
 		Payment payment = new Payment();
 		payment.setWaterPrice(user.getWaterPrice());
 		payment.setElectPrice(user.getElectPrice());
+		payment.setNetPrice(user.getNetPrice());
 		payment.setBasePayment(0.0);
 		payment.setDeposit(-rental.getDeposit());
 		payment.setAdjustSum(0.0);
