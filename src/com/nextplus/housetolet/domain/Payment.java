@@ -71,8 +71,8 @@ public class Payment extends SuperEntity {
 	public void computePaymentAndInitDate() {
 		DecimalFormat df = new DecimalFormat("0.00");
 		// 计算水费、电费、网费 
-		setElectPay(Double.valueOf(df.format(getElectPrice() * (getEndElect() - getStartElect()))));
-		setWaterPay(Double.valueOf(df.format(getWaterPrice() * (getEndWater() - getStartWater()))));
+		setElectPay(getElectPrice() * (getEndElect() - getStartElect()));
+		setWaterPay(getWaterPrice() * (getEndWater() - getStartWater()));
 		netPay = hasNet ? getNetPrice() : 0;
 		// 计算水费、电费、网费、基础租金、押金、其他费用的总和，并四舍五入计算结转零头
 		double sum = getBasePayment() + getDeposit() + getElectPay() + getWaterPay() + getNetPay() + getAdjustSum();
@@ -81,7 +81,12 @@ public class Payment extends SuperEntity {
 		BigDecimal sumB = new BigDecimal(sum);
 		BigDecimal sumR = new BigDecimal(sumRound);
 		BigDecimal decimal = sumR.subtract(sumB);
-		setAdjustPrice(Double.valueOf(df.format(decimal.doubleValue())));
+		setAdjustPrice(decimal.doubleValue());
+		
+		setElectPay(Double.valueOf(df.format(getElectPay())));
+		setWaterPay(Double.valueOf(df.format(getWaterPay())));
+		setAdjustPrice(Double.valueOf(df.format(getAdjustPrice())));
+		
 		// 设置状态为未缴纳房租
 		setHasPayed(false);
 	}
@@ -92,15 +97,19 @@ public class Payment extends SuperEntity {
 	public void computeLastPayment() {
 		DecimalFormat df = new DecimalFormat("0.00");
 		// 计算水费、电费、网费 
-		setElectPay(Double.valueOf(df.format(getElectPrice() * (getEndElect() - getStartElect()))));
-		setWaterPay(Double.valueOf(df.format(getWaterPrice() * (getEndWater() - getStartWater()))));
+		setElectPay(getElectPrice() * (getEndElect() - getStartElect()));
+		setWaterPay(getWaterPrice() * (getEndWater() - getStartWater()));
 		double sum = getElectPay() + getWaterPay() + getAdjustSum() + getDeposit();
 		long sumRound = Math.round(sum);
 		setSumPay(Double.valueOf(sumRound));
 		BigDecimal sumB = new BigDecimal(sum);
 		BigDecimal sumR = new BigDecimal(sumRound);
 		BigDecimal decimal = sumR.subtract(sumB);
-		setAdjustPrice(Double.valueOf(df.format(decimal.doubleValue())));
+		setAdjustPrice(decimal.doubleValue());
+		
+		setElectPay(Double.valueOf(df.format(getElectPay())));
+		setWaterPay(Double.valueOf(df.format(getWaterPay())));
+		setAdjustPrice(Double.valueOf(df.format(getAdjustPrice())));
 	}
 	
 	public Date getStartDate() {
